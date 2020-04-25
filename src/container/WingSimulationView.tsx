@@ -104,33 +104,30 @@ const WingSimulationView: React.FC = () => (
       <Form.Label>
         オーディション設定
       </Form.Label>
-      <Table bordered responsive size="sm" className="text-nowrap">
-        <thead>
-          <th>オーデ週</th>
-          <th>Vo補正</th>
-          <th>Da補正</th>
-          <th>Vi補正</th>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <Form.Control size="sm" defaultValue="1" as="select">
-                <option value="0">準決勝</option>
-                <option value="1">決勝</option>
-              </Form.Control>
-            </td>
-            <td><IdolBuffInput value="20" /></td>
-            <td><IdolBuffInput value="0" /></td>
-            <td><IdolBuffInput value="0" /></td>
-          </tr>
-        </tbody>
-      </Table>
+      <Form.Control size="sm" defaultValue="1" as="select">
+        <option value="0">準決勝　(真乃・灯織・咲耶・結華・霧子)</option>
+        <option value="1">決勝　(樹里・凛世・夏葉・千雪・真乃)</option>
+      </Form.Control>
     </Form.Group>
     <hr style={{ borderWidth: 2, borderColor: 'black' }} />
     <Form.Group className="my-0">
       <Form.Label>
         シミュレーション設定
       </Form.Label>
+      <Table bordered responsive size="sm" className="text-nowrap">
+        <thead>
+          <th>Vo補正</th>
+          <th>Da補正</th>
+          <th>Vi補正</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td><IdolBuffInput value="20" /></td>
+            <td><IdolBuffInput value="0" /></td>
+            <td><IdolBuffInput value="0" /></td>
+          </tr>
+        </tbody>
+      </Table>
       <Table bordered responsive size="sm" className="text-nowrap">
         <thead>
           <th>樹里</th>
