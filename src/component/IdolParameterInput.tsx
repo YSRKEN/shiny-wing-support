@@ -11,9 +11,9 @@ const IdolParameterInput: React.FC<{
 }> = ({ name, vocal, dance, visual }) => (
   <tr>
     <td><IdolNameInput name={name}/></td>
-    <td><Form.Control defaultValue={vocal} placeholder="Vo" /></td>
-    <td><Form.Control defaultValue={dance} placeholder="Vi" /></td>
-    <td><Form.Control defaultValue={visual} placeholder="Da" /></td>
+    <td><Form.Control size="sm" defaultValue={vocal} placeholder="Vo" /></td>
+    <td><Form.Control size="sm" defaultValue={dance} placeholder="Vi" /></td>
+    <td><Form.Control size="sm" defaultValue={visual} placeholder="Da" /></td>
   </tr>
 );
 

@@ -16,7 +16,7 @@ const UnitConfigView: React.FC = () => (
       <Form.Label>
         ユニット名
       </Form.Label>
-      <Form.Control defaultValue="Vocal編成" placeholder="ユニット名" />
+      <Form.Control size="sm" defaultValue="Vocal編成" placeholder="ユニット名" />
     </Form.Group>
     <Form.Group>
       <Form.Label>
@@ -42,7 +42,7 @@ const UnitConfigView: React.FC = () => (
       <Form.Label>
         保存済みユニット
       </Form.Label>
-      <Form.Control defaultValue="ユニット1" as="select">
+      <Form.Control size="sm" defaultValue="ユニット1" as="select">
         {UNIT_LIST.map((unit) => <option key={unit} value={unit}>{unit}</option>)}
       </Form.Control>
       <div className="my-3">

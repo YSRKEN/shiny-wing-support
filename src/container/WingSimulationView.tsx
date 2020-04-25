@@ -18,7 +18,7 @@ const AppealMagnificationInput: React.FC<{
     }
   }
   return (
-    <Form.Control defaultValue={value} as="select">
+    <Form.Control size="sm" defaultValue={value} as="select">
       {temp.map((record) => <option key={record.value} value={record.value}>{record.label}</option>)}
     </Form.Control>
   );
@@ -33,7 +33,7 @@ const IdolBuffInput: React.FC<{
     temp.push({ value: `${i}`, label: `${i}％` });
   }
   return (
-    <Form.Control defaultValue={value} as="select">
+    <Form.Control size="sm" defaultValue={value} as="select">
       {temp.map((record) => <option key={record.value} value={record.value}>{record.label}</option>)}
     </Form.Control>
   );
@@ -43,7 +43,7 @@ const IdolAppealInput: React.FC<{
   value: string
 }> = ({ value }) => {
   return (
-    <Form.Control defaultValue={value} as="select">
+    <Form.Control size="sm" defaultValue={value} as="select">
       <option value="perfect">PERFECT</option>
       <option value="good">GOOD</option>
       <option value="normal">NORMAL</option>
@@ -84,7 +84,7 @@ const WingSimulationView: React.FC = () => (
         <tbody>
           <tr>
             <td>
-              <Form.Control defaultValue="3" as="select">
+              <Form.Control size="sm" defaultValue="3" as="select">
                 <option value="0">Lv.0</option>
                 <option value="1">Lv.1</option>
                 <option value="2">Lv.2</option>
@@ -114,7 +114,7 @@ const WingSimulationView: React.FC = () => (
         <tbody>
           <tr>
             <td>
-              <Form.Control defaultValue="1" as="select">
+              <Form.Control size="sm" defaultValue="1" as="select">
                 <option value="0">準決勝</option>
                 <option value="1">決勝</option>
               </Form.Control>
