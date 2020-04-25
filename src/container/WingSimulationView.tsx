@@ -1,6 +1,7 @@
 import React from 'react';
-import { Form, Table, Button } from 'react-bootstrap';
+import { Form, Table } from 'react-bootstrap';
 import IdolParameterInput from 'component/IdolParameterInput';
+import IdolNameInput from 'component/IdolNameInput';
 
 // アピール効果の倍率入力用フォーム
 const AppealMagnificationInput: React.FC<{
@@ -29,11 +30,25 @@ const IdolBuffInput: React.FC<{
 }> = ({ value }) => {
   const temp: { value: string, label: string }[] = [];
   for (let i = -100; i <= 100; i += 1) {
-      temp.push({ value: `${i}`, label: `${i}％` });
+    temp.push({ value: `${i}`, label: `${i}％` });
   }
   return (
     <Form.Control defaultValue={value} as="select">
       {temp.map((record) => <option key={record.value} value={record.value}>{record.label}</option>)}
+    </Form.Control>
+  );
+};
+
+const IdolAppealInput: React.FC<{
+  value: string
+}> = ({ value }) => {
+  return (
+    <Form.Control defaultValue={value} as="select">
+      <option value="perfect">PERFECT</option>
+      <option value="good">GOOD</option>
+      <option value="normal">NORMAL</option>
+      <option value="bad">BAD</option>
+      <option value="memorial">思い出</option>
     </Form.Control>
   );
 };
@@ -111,7 +126,61 @@ const WingSimulationView: React.FC = () => (
         </tbody>
       </Table>
     </Form.Group>
-    <hr style={{borderWidth: 2, borderColor: 'black'}}/>
+    <hr style={{ borderWidth: 2, borderColor: 'black' }} />
+    <Form.Group className="my-0">
+      <Form.Label>
+        シミュレーション設定
+      </Form.Label>
+      <Table bordered responsive size="sm" className="text-nowrap">
+        <thead>
+          <th>樹里</th>
+          <th>凛世</th>
+          <th>夏葉</th>
+          <th>千雪</th>
+          <th>真乃</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td><IdolAppealInput value="good" /></td>
+            <td><IdolAppealInput value="perfect" /></td>
+            <td><IdolAppealInput value="good" /></td>
+            <td><IdolAppealInput value="normal" /></td>
+            <td><IdolAppealInput value="normal" /></td>
+          </tr>
+        </tbody>
+      </Table>
+      <Table bordered responsive size="sm" className="text-nowrap">
+        <thead>
+          <th>ターン</th>
+          <th>選択1</th>
+          <th>選択2</th>
+          <th>選択3</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td className="align-middle" rowSpan={2}>
+              <Form.Control defaultValue="3" as="select">
+                <option value="1">TURN 1</option>
+                <option value="2">TURN 2</option>
+                <option value="3">TURN 3</option>
+                <option value="4">TURN 4</option>
+                <option value="5">TURN 5</option>
+                <option value="6">TURN 6</option>
+              </Form.Control>
+            </td>
+            <td><IdolNameInput name="霧子" /></td>
+            <td><IdolNameInput name="真乃" /></td>
+            <td><IdolNameInput name="甘奈" /></td>
+          </tr>
+          <tr>
+            <td><AppealMagnificationInput value="3.0" /></td>
+            <td><AppealMagnificationInput value="2.0" /></td>
+            <td><AppealMagnificationInput value="2.5" /></td>
+          </tr>
+        </tbody>
+      </Table>
+    </Form.Group>
+    <hr style={{ borderWidth: 2, borderColor: 'black' }} />
   </Form>
 );
 
