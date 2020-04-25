@@ -39,6 +39,7 @@ const IdolBuffInput: React.FC<{
   );
 };
 
+// ライバルアイドルの設定フォーム
 const IdolAppealInput: React.FC<{
   value: string
 }> = ({ value }) => {
@@ -51,6 +52,30 @@ const IdolAppealInput: React.FC<{
       <option value="memorial">思い出</option>
     </Form.Control>
   );
+};
+
+// シミュレーションのアピール結果のフォーム
+const AppealTypeInput: React.FC<{
+  value: string,
+  memorialFlg: boolean
+}> = ({ value, memorialFlg }) => {
+  if (memorialFlg) {
+    return (
+      <Form.Control size="sm" defaultValue={value} as="select">
+        <option value="good">GOOD</option>
+        <option value="bad">BAD</option>
+      </Form.Control>
+    );
+  } else {
+    return (
+      <Form.Control size="sm" defaultValue={value} as="select">
+        <option value="perfect">PERFECT</option>
+        <option value="good">GOOD</option>
+        <option value="normal">NORMAL</option>
+        <option value="bad">BAD</option>
+      </Form.Control>
+    );
+  }
 };
 
 // シミュレーション設定
@@ -178,6 +203,22 @@ const WingSimulationView: React.FC = () => (
       </Table>
     </Form.Group>
     <hr style={{ borderWidth: 2, borderColor: 'black' }} />
+    <Form.Group className="my-0">
+      <Form.Label>
+        シミュレーション結果
+      </Form.Label>
+      <div className="d-flex mb-3">
+        <Form.Control size="sm" className="mr-3" defaultValue="Vo" as="select">
+          <option value="Vo">Vocal</option>
+          <option value="Da">Dance</option>
+          <option value="Vi">Visual</option>
+          <option value="Me">思い出アピール</option>
+        </Form.Control>
+        <AppealTypeInput value="good" memorialFlg={false} />
+      </div>
+      <Form.Control as="textarea" rows={10} readOnly disabled
+        defaultValue="ここに計算結果が出る" />
+    </Form.Group>
   </Form>
 );
 
