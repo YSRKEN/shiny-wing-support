@@ -3,6 +3,7 @@ import { Container, Row, Col, Tabs, Tab } from 'react-bootstrap';
 import 'App.css';
 import UnitConfigView from 'container/UnitConfigView';
 import WingSimulationView from 'container/WingSimulationView';
+import { UnitConfigContext, useUnitConfigState } from 'state/UnitConfigState';
 
 const App: React.FC = () => (
   <Container>
@@ -14,9 +15,11 @@ const App: React.FC = () => (
     </Row>
     <Row className="my-3">
       <Col>
-        <Tabs defaultActiveKey="wing" id="application-mode" transition={false}>
+        <Tabs defaultActiveKey="unit" id="application-mode" transition={false}>
           <Tab eventKey="unit" title="ユニット編成">
-            <UnitConfigView />
+            <UnitConfigContext.Provider value={useUnitConfigState()}>
+              <UnitConfigView />
+            </UnitConfigContext.Provider>
           </Tab>
           <Tab eventKey="wing" title="WINGシミュレーション">
             <WingSimulationView />
