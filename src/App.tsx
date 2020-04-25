@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Tabs, Tab } from 'react-bootstrap';
 import 'App.css';
+import UnitConfigView from 'container/UnitConfigView';
 
 const App: React.FC = () => (
   <Container>
@@ -14,7 +15,7 @@ const App: React.FC = () => (
       <Col>
         <Tabs defaultActiveKey="unit" id="application-mode" transition={false}>
           <Tab eventKey="unit" title="ユニット編成">
-            <span>aaa</span>
+            <UnitConfigView />
           </Tab>
           <Tab eventKey="wing" title="WINGシミュレーション">
             <span>aaa</span>
