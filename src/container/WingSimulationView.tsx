@@ -85,10 +85,12 @@ const WingSimulationView: React.FC = () => (
       <Form.Label>アイドル設定</Form.Label>
       <Table bordered responsive size="sm" className="text-nowrap">
         <thead>
-          <th>アイドル名</th>
-          <th>Vo</th>
-          <th>Da</th>
-          <th>Vi</th>
+          <tr>
+            <th>アイドル名</th>
+            <th>Vo</th>
+            <th>Da</th>
+            <th>Vi</th>
+          </tr>
         </thead>
         <tbody>
           <IdolParameterInput name="甜花" vocal="600" dance="233" visual="216" />
@@ -101,10 +103,12 @@ const WingSimulationView: React.FC = () => (
       </Form.Label>
       <Table bordered responsive size="sm" className="text-nowrap">
         <thead>
-          <th>レベル</th>
-          <th>Voアピール</th>
-          <th>Daアピール</th>
-          <th>Viアピール</th>
+          <tr>
+            <th>レベル</th>
+            <th>Voアピール</th>
+            <th>Daアピール</th>
+            <th>Viアピール</th>
+          </tr>
         </thead>
         <tbody>
           <tr>
@@ -141,9 +145,11 @@ const WingSimulationView: React.FC = () => (
       </Form.Label>
       <Table bordered responsive size="sm" className="text-nowrap">
         <thead>
-          <th>Vo補正</th>
-          <th>Da補正</th>
-          <th>Vi補正</th>
+          <tr>
+            <th>Vo補正</th>
+            <th>Da補正</th>
+            <th>Vi補正</th>
+          </tr>
         </thead>
         <tbody>
           <tr>
@@ -155,11 +161,13 @@ const WingSimulationView: React.FC = () => (
       </Table>
       <Table bordered responsive size="sm" className="text-nowrap">
         <thead>
-          <th>樹里</th>
-          <th>凛世</th>
-          <th>夏葉</th>
-          <th>千雪</th>
-          <th>真乃</th>
+          <tr>
+            <th>樹里</th>
+            <th>凛世</th>
+            <th>夏葉</th>
+            <th>千雪</th>
+            <th>真乃</th>
+          </tr>
         </thead>
         <tbody>
           <tr>
@@ -173,10 +181,12 @@ const WingSimulationView: React.FC = () => (
       </Table>
       <Table bordered responsive size="sm" className="text-nowrap">
         <thead>
-          <th>ターン</th>
-          <th>選択1</th>
-          <th>選択2</th>
-          <th>選択3</th>
+          <tr>
+            <th>ターン</th>
+            <th>選択1</th>
+            <th>選択2</th>
+            <th>選択3</th>
+          </tr>
         </thead>
         <tbody>
           <tr>

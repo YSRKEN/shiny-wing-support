@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, FormEvent } from 'react';
 import { Form, Table, Button } from 'react-bootstrap';
 import IdolParameterInput from 'component/IdolParameterInput';
 import { UnitConfigContext } from 'state/UnitConfigState';
@@ -12,7 +12,11 @@ const UNIT_LIST = [
 
 // ユニット編成入力用フォーム
 const UnitConfigView: React.FC = () => {
-  const { dispatch } = useContext(UnitConfigContext);
+  const { selectedSupportUnit, dispatch } = useContext(UnitConfigContext);
+
+  const onChangeUnitName = (e: FormEvent<any>) => {
+    dispatch({type: 'setUnitName', message: e.currentTarget.value});
+  };
 
   return (
     <Form>
@@ -20,7 +24,8 @@ const UnitConfigView: React.FC = () => {
         <Form.Label>
           ユニット名
       </Form.Label>
-        <Form.Control size="sm" defaultValue="Vocal編成" placeholder="ユニット名" />
+        <Form.Control size="sm" placeholder="ユニット名" value={selectedSupportUnit.unitName}
+          onChange={onChangeUnitName}/>
       </Form.Group>
       <Form.Group>
         <Form.Label>
@@ -28,10 +33,12 @@ const UnitConfigView: React.FC = () => {
       </Form.Label>
         <Table bordered responsive size="sm" className="text-nowrap">
           <thead>
-            <th>アイドル名</th>
-            <th>Vo</th>
-            <th>Da</th>
-            <th>Vi</th>
+            <tr>
+              <th>アイドル名</th>
+              <th>Vo</th>
+              <th>Da</th>
+              <th>Vi</th>
+            </tr>
           </thead>
           <tbody>
             <IdolParameterInput name="真乃" vocal="195" dance="195" visual="178" />
@@ -51,7 +58,7 @@ const UnitConfigView: React.FC = () => {
         </Form.Control>
         <div className="my-3">
           <Button className="mr-3"
-            onClick={() => dispatch({type: 'test', message: ''})}>追加</Button>
+            onClick={() => dispatch({ type: 'test', message: '' })}>追加</Button>
           <Button className="mr-3" variant="warning">読込み</Button>
           <Button className="mr-3" variant="warning">上書き</Button>
           <Button variant="danger">削除</Button>
