@@ -93,7 +93,11 @@ const WingSimulationView: React.FC = () => (
           </tr>
         </thead>
         <tbody>
-          <IdolParameterInput name="甜花" vocal="600" dance="233" visual="216" />
+          <IdolParameterInput name="甜花" vocal={600} dance={233} visual={216}
+              setName={(v: string) => {}}
+              setVocal={(v: number) => {}}
+              setDance={(v: number) => {}}
+              setVisual={(v: number) => {}} />
         </tbody>
       </Table>
     </Form.Group>
@@ -200,9 +204,9 @@ const WingSimulationView: React.FC = () => (
                 <option value="6">TURN 6</option>
               </Form.Control>
             </td>
-            <td><IdolNameInput name="霧子" /></td>
-            <td><IdolNameInput name="真乃" /></td>
-            <td><IdolNameInput name="甘奈" /></td>
+            <td><IdolNameInput name="霧子" setName={(v: string) => {}} /></td>
+            <td><IdolNameInput name="真乃" setName={(v: string) => {}} /></td>
+            <td><IdolNameInput name="甘奈" setName={(v: string) => {}} /></td>
           </tr>
           <tr>
             <td><AppealMagnificationInput value="3.0" /></td>

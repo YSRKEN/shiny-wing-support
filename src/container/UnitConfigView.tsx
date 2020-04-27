@@ -18,13 +18,29 @@ const UnitConfigView: React.FC = () => {
     dispatch({type: 'setUnitName', message: e.currentTarget.value});
   };
 
+  const setIdolName = (index: number, name: string) => {
+    dispatch({type: 'setIdolName', message: `${index},${name}`});
+  };
+
+  const setIdolVocal = (index: number, vocal: number) => {
+    dispatch({type: 'setIdolVocal', message: `${index},${vocal}`});
+  };
+
+  const setIdolDance = (index: number, dance: number) => {
+    dispatch({type: 'setIdolDance', message: `${index},${dance}`});
+  };
+
+  const setIdolVisual= (index: number, visual: number) => {
+    dispatch({type: 'setIdolVisual', message: `${index},${visual}`});
+  };
+
   return (
     <Form>
       <Form.Group className="my-3">
         <Form.Label>
           ユニット名
       </Form.Label>
-        <Form.Control size="sm" placeholder="ユニット名" value={selectedSupportUnit.unitName}
+        <Form.Control size="sm" placeholder="ユニット名" defaultValue={selectedSupportUnit.unitName}
           onChange={onChangeUnitName}/>
       </Form.Group>
       <Form.Group>
@@ -41,10 +57,17 @@ const UnitConfigView: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            <IdolParameterInput name="真乃" vocal="195" dance="195" visual="178" />
-            <IdolParameterInput name="霧子" vocal="202" dance="146" visual="146" />
-            <IdolParameterInput name="咲耶" vocal="175" dance="124" visual="150" />
-            <IdolParameterInput name="甘奈" vocal="191" dance="155" visual="174" />
+            {selectedSupportUnit.idol.map((idol, index) => {
+              return <IdolParameterInput key={index}
+                name={idol.name}
+                vocal={idol.vocal}
+                dance={idol.dance}
+                visual={idol.visual}
+                setName={(v: string) => setIdolName(index, v)}
+                setVocal={(v: number) => setIdolVocal(index, v)}
+                setDance={(v: number) => setIdolDance(index, v)}
+                setVisual={(v: number) => setIdolVisual(index, v)} />;
+            }) }
           </tbody>
         </Table>
       </Form.Group>

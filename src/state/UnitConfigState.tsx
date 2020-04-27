@@ -1,14 +1,16 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
+
+interface IdolParameter {
+  name: string;
+  vocal: number;
+  dance: number;
+  visual: number;
+}
 
 // サポートユニット情報
 interface SupportUnit {
   unitName: string;
-  idol: {
-    name: string,
-    vocal: number,
-    dance: number,
-    visual: number
-  }[];
+  idol: IdolParameter[];
 }
 
 const DEFAULT_SUPPORT: SupportUnit = {
@@ -22,7 +24,12 @@ const DEFAULT_SUPPORT: SupportUnit = {
 };
 
 // Actionの種類
-type ActionType = 'test' | 'setUnitName';
+type ActionType = 'test'
+  | 'setUnitName'
+  | 'setIdolName'
+  | 'setIdolVocal'
+  | 'setIdolDance'
+  | 'setIdolVisual';
 
 // Action
 interface Action {
@@ -40,6 +47,10 @@ interface UnitConfigState {
 export const useUnitConfigState = () => {
   const [selectedSupportUnit, setSelectedSupportUnit] = useState<SupportUnit>(DEFAULT_SUPPORT);
 
+  useEffect(() => {
+    console.debug(selectedSupportUnit);
+  }, [selectedSupportUnit]);
+
   const dispatch = (action: Action) => {
     console.debug(action);
     switch (action.type) {
@@ -49,6 +60,38 @@ export const useUnitConfigState = () => {
       case 'setUnitName':
         setSelectedSupportUnit({...selectedSupportUnit, unitName: action.message});
         break;
+      case 'setIdolName':{
+        const index = parseInt(action.message.split(',')[0], 10);
+        const value = action.message.split(',')[1];
+        const temp: IdolParameter[] = JSON.parse(JSON.stringify(selectedSupportUnit.idol));
+        temp[index].name = value;
+        setSelectedSupportUnit({...selectedSupportUnit, idol: temp});
+        break;
+      }
+      case 'setIdolVocal':{
+        const index = parseInt(action.message.split(',')[0], 10);
+        const value = parseInt(action.message.split(',')[1], 10);
+        const temp: IdolParameter[] = JSON.parse(JSON.stringify(selectedSupportUnit.idol));
+        temp[index].vocal = value;
+        setSelectedSupportUnit({...selectedSupportUnit, idol: temp});
+        break;
+      }
+      case 'setIdolDance':{
+        const index = parseInt(action.message.split(',')[0], 10);
+        const value = parseInt(action.message.split(',')[1], 10);
+        const temp: IdolParameter[] = JSON.parse(JSON.stringify(selectedSupportUnit.idol));
+        temp[index].dance = value;
+        setSelectedSupportUnit({...selectedSupportUnit, idol: temp});
+        break;
+      }
+      case 'setIdolVisual':{
+        const index = parseInt(action.message.split(',')[0], 10);
+        const value = parseInt(action.message.split(',')[1], 10);
+        const temp: IdolParameter[] = JSON.parse(JSON.stringify(selectedSupportUnit.idol));
+        temp[index].visual = value;
+        setSelectedSupportUnit({...selectedSupportUnit, idol: temp});
+        break;
+      }
     }
   };
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import { Form } from 'react-bootstrap';
 
 // アイドル一覧
@@ -30,11 +30,18 @@ const IDOL_LIST = [
 
 // アイドルのパラメーター設定用のフォーム
 const IdolNameInput: React.FC<{
-  name: string
-}> = ({ name }) => (
-  <Form.Control size="sm" defaultValue={name} as="select">
-    {IDOL_LIST.map((record) => <option key={record}>{record}</option>)}
-  </Form.Control>
-);
+  name: string,
+  setName: (v: string) => void
+}> = ({ name, setName }) => {
+  const setNameImpl = (e: FormEvent<any>) => {
+    setName(e.currentTarget.value);
+  };
+
+  return (
+    <Form.Control size="sm" defaultValue={name} as="select" onChange={setNameImpl}>
+      {IDOL_LIST.map((record) => <option key={record}>{record}</option>)}
+    </Form.Control>
+  );
+};
 
 export default IdolNameInput;
