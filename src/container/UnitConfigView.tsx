@@ -1,19 +1,25 @@
-import React, { useContext, FormEvent } from 'react';
+import React, { useContext, FormEvent, useState, useEffect } from 'react';
 import { Form, Table, Button } from 'react-bootstrap';
 import IdolParameterInput from 'component/IdolParameterInput';
 import { UnitConfigContext } from 'state/UnitConfigState';
 
-// 既存のユニット一覧
-const UNIT_LIST = [
-  'ユニット1',
-  'ユニット2',
-  'ユニット3'
-];
-
 // ユニット編成入力用フォーム
 const UnitConfigView: React.FC = () => {
-  const { selectedSupportUnit, dispatch } = useContext(UnitConfigContext);
+  const { supportUnitList, selectedSupportUnit, dispatch } = useContext(UnitConfigContext);
 
+  const [unitName, setUnitName] = useState('');
+
+  useEffect(() => {
+    if (supportUnitList.length > 0) {
+      if (unitName === '' || !supportUnitList.map(r => r.unitName).includes(unitName)) {
+        setUnitName(supportUnitList[0].unitName);
+      }
+    }
+  }, [supportUnitList]);
+
+  const selectSupportUnit = (e: FormEvent<any>) => {
+    setUnitName(e.currentTarget.value);
+  }
   const onChangeUnitName = (e: FormEvent<any>) => {
     dispatch({type: 'setUnitName', message: e.currentTarget.value});
   };
@@ -33,6 +39,8 @@ const UnitConfigView: React.FC = () => {
   const setIdolVisual= (index: number, visual: number) => {
     dispatch({type: 'setIdolVisual', message: `${index},${visual}`});
   };
+  const addUnit = () => dispatch({ type: 'addUnit', message: '' });
+  const loadUnit = () => dispatch({ type: 'loadUnit', message: unitName });
 
   return (
     <Form>
@@ -40,7 +48,7 @@ const UnitConfigView: React.FC = () => {
         <Form.Label>
           ユニット名
       </Form.Label>
-        <Form.Control size="sm" placeholder="ユニット名" defaultValue={selectedSupportUnit.unitName}
+        <Form.Control size="sm" placeholder="ユニット名" value={selectedSupportUnit.unitName}
           onChange={onChangeUnitName}/>
       </Form.Group>
       <Form.Group>
@@ -76,13 +84,15 @@ const UnitConfigView: React.FC = () => {
         <Form.Label>
           保存済みユニット
       </Form.Label>
-        <Form.Control size="sm" defaultValue="ユニット1" as="select">
-          {UNIT_LIST.map((unit) => <option key={unit} value={unit}>{unit}</option>)}
+        <Form.Control size="sm" value={unitName} as="select"
+          onChange={selectSupportUnit}>
+          {supportUnitList.map((unit) => <option key={unit.unitName} value={unit.unitName}>{unit.unitName}</option>)}
         </Form.Control>
         <div className="my-3">
-          <Button className="mr-3"
-            onClick={() => dispatch({ type: 'test', message: '' })}>追加</Button>
-          <Button className="mr-3" variant="warning">読込み</Button>
+          <Button className="mr-3" onClick={addUnit}
+            disabled={supportUnitList.map(r => r.unitName).includes(selectedSupportUnit.unitName)}>追加</Button>
+          <Button className="mr-3" onClick={loadUnit} variant="warning"
+            disabled={unitName === ''}>読込み</Button>
           <Button className="mr-3" variant="warning">上書き</Button>
           <Button variant="danger">削除</Button>
         </div>

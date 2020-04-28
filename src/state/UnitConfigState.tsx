@@ -24,12 +24,13 @@ const DEFAULT_SUPPORT: SupportUnit = {
 };
 
 // Actionの種類
-type ActionType = 'test'
-  | 'setUnitName'
+type ActionType = 'setUnitName'
   | 'setIdolName'
   | 'setIdolVocal'
   | 'setIdolDance'
-  | 'setIdolVisual';
+  | 'setIdolVisual'
+  | 'addUnit'
+  | 'loadUnit';
 
 // Action
 interface Action {
@@ -39,6 +40,7 @@ interface Action {
 
 // 状態
 interface UnitConfigState {
+  supportUnitList: SupportUnit[];
   selectedSupportUnit: SupportUnit;
   dispatch: (action: Action) => void;
 }
@@ -46,17 +48,28 @@ interface UnitConfigState {
 // 状態の生成
 export const useUnitConfigState = () => {
   const [selectedSupportUnit, setSelectedSupportUnit] = useState<SupportUnit>(DEFAULT_SUPPORT);
+  const [supportUnitList, setSupportUnitList] = useState<SupportUnit[]>([]);
 
   useEffect(() => {
     console.debug(selectedSupportUnit);
   }, [selectedSupportUnit]);
+  useEffect(() => {
+    console.debug(supportUnitList);
+  }, [supportUnitList]);
 
   const dispatch = (action: Action) => {
     console.debug(action);
     switch (action.type) {
-      case 'test':
-        window.alert('test');
+      case 'addUnit':
+        setSupportUnitList([...supportUnitList, JSON.parse(JSON.stringify(selectedSupportUnit))]);
         break;
+      case 'loadUnit':{
+        const temp = supportUnitList.filter(r => r.unitName === action.message);
+        if (temp.length > 0) {
+          setSelectedSupportUnit(JSON.parse(JSON.stringify(temp[0])));
+        }
+        break;
+      }
       case 'setUnitName':
         setSelectedSupportUnit({...selectedSupportUnit, unitName: action.message});
         break;
@@ -96,6 +109,7 @@ export const useUnitConfigState = () => {
   };
 
   return {
+    supportUnitList,
     selectedSupportUnit,
     dispatch
   };

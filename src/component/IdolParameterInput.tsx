@@ -49,9 +49,9 @@ const IdolParameterInput: React.FC<{
   return (
     <tr>
       <td><IdolNameInput name={name} setName={setName} /></td>
-      <td><Form.Control size="sm" defaultValue={vocal} placeholder="Vo" onChange={setVocalImpl} /></td>
-      <td><Form.Control size="sm" defaultValue={dance} placeholder="Da" onChange={setDanceImpl} /></td>
-      <td><Form.Control size="sm" defaultValue={visual} placeholder="Vi" onChange={setVisualImpl} /></td>
+      <td><Form.Control size="sm" value={vocal} placeholder="Vo" onChange={setVocalImpl} /></td>
+      <td><Form.Control size="sm" value={dance} placeholder="Da" onChange={setDanceImpl} /></td>
+      <td><Form.Control size="sm" value={visual} placeholder="Vi" onChange={setVisualImpl} /></td>
     </tr>
   );
 };

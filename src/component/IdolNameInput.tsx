@@ -38,7 +38,7 @@ const IdolNameInput: React.FC<{
   };
 
   return (
-    <Form.Control size="sm" defaultValue={name} as="select" onChange={setNameImpl}>
+    <Form.Control size="sm" value={name} as="select" onChange={setNameImpl}>
       {IDOL_LIST.map((record) => <option key={record}>{record}</option>)}
     </Form.Control>
   );
