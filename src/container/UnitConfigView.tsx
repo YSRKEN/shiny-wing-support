@@ -41,6 +41,12 @@ const UnitConfigView: React.FC = () => {
   };
   const addUnit = () => dispatch({ type: 'addUnit', message: '' });
   const loadUnit = () => dispatch({ type: 'loadUnit', message: unitName });
+  const updateUnit = () => dispatch({ type: 'updateUnit', message: unitName });
+  const deleteUnit = () => {
+    if (window.confirm(`「${unitName}」を削除しても大丈夫ですか？`)) {
+      dispatch({ type: 'deleteUnit', message: unitName });
+    }
+  };
 
   return (
     <Form>
@@ -93,8 +99,10 @@ const UnitConfigView: React.FC = () => {
             disabled={supportUnitList.map(r => r.unitName).includes(selectedSupportUnit.unitName)}>追加</Button>
           <Button className="mr-3" onClick={loadUnit} variant="warning"
             disabled={unitName === ''}>読込み</Button>
-          <Button className="mr-3" variant="warning">上書き</Button>
-          <Button variant="danger">削除</Button>
+          <Button className="mr-3" onClick={updateUnit} variant="warning"
+            disabled={supportUnitList.map(r => r.unitName).includes(selectedSupportUnit.unitName) && selectedSupportUnit.unitName !== unitName}>上書き</Button>
+          <Button  onClick={deleteUnit} variant="danger"
+             disabled={unitName === '' || supportUnitList.length === 0}>削除</Button>
         </div>
       </Form.Group>
     </Form>

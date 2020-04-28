@@ -30,7 +30,9 @@ type ActionType = 'setUnitName'
   | 'setIdolDance'
   | 'setIdolVisual'
   | 'addUnit'
-  | 'loadUnit';
+  | 'loadUnit'
+  | 'updateUnit'
+  | 'deleteUnit';
 
 // Action
 interface Action {
@@ -67,6 +69,34 @@ export const useUnitConfigState = () => {
         const temp = supportUnitList.filter(r => r.unitName === action.message);
         if (temp.length > 0) {
           setSelectedSupportUnit(JSON.parse(JSON.stringify(temp[0])));
+        }
+        break;
+      }
+      case 'updateUnit': {
+        const index = supportUnitList.findIndex(r => r.unitName === action.message);
+        if (index >= 0) {
+          const newList: SupportUnit[] = [];
+          for (let i = 0; i < supportUnitList.length; i += 1) {
+            if (i !== index) {
+              newList.push(JSON.parse(JSON.stringify(supportUnitList[i])));
+            } else {
+              newList.push(JSON.parse(JSON.stringify(selectedSupportUnit)));
+            }
+          }
+          setSupportUnitList(newList);
+        }
+        break;
+      }
+      case 'deleteUnit': {
+        const index = supportUnitList.findIndex(r => r.unitName === action.message);
+        if (index >= 0) {
+          const newList: SupportUnit[] = [];
+          for (let i = 0; i < supportUnitList.length; i += 1) {
+            if (i !== index) {
+              newList.push(JSON.parse(JSON.stringify(supportUnitList[i])));
+            }
+          }
+          setSupportUnitList(newList);
         }
         break;
       }
