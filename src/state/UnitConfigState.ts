@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 
+// アイドルのパラメーター
 interface IdolParameter {
   name: string;
   vocal: number;
@@ -47,16 +48,37 @@ interface UnitConfigState {
   dispatch: (action: Action) => void;
 }
 
+// データ読み込み
+const loadDataFromLocalStrage = <T>(key: string, defaultValue: T): T => {
+  const temp = window.localStorage.getItem(key);
+  if (temp !== null) {
+    return JSON.parse(temp) as T;
+  } else {
+    return defaultValue;
+  }
+};
+
+// データの書き出し
+const saveDataToLocalStrage = <T>(key: string, value: T) => {
+  window.localStorage.setItem(key, JSON.stringify(value));
+}
+
 // 状態の生成
 export const useUnitConfigState = () => {
-  const [selectedSupportUnit, setSelectedSupportUnit] = useState<SupportUnit>(DEFAULT_SUPPORT);
-  const [supportUnitList, setSupportUnitList] = useState<SupportUnit[]>([]);
+  // 状態定義
+  const [selectedSupportUnit, setSelectedSupportUnit] = useState<SupportUnit>(
+    loadDataFromLocalStrage('selectedSupportUnit', DEFAULT_SUPPORT)
+  );
+  const [supportUnitList, setSupportUnitList] = useState<SupportUnit[]>(
+    loadDataFromLocalStrage('supportUnitList', [])
+  );
 
+  // データの自動保存
   useEffect(() => {
-    console.debug(selectedSupportUnit);
+    saveDataToLocalStrage('selectedSupportUnit', selectedSupportUnit);
   }, [selectedSupportUnit]);
   useEffect(() => {
-    console.debug(supportUnitList);
+    saveDataToLocalStrage('supportUnitList', supportUnitList);
   }, [supportUnitList]);
 
   const dispatch = (action: Action) => {

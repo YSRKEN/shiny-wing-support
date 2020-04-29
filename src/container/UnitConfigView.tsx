@@ -15,6 +15,7 @@ const UnitConfigView: React.FC = () => {
         setUnitName(supportUnitList[0].unitName);
       }
     }
+  // eslint-disable-next-line
   }, [supportUnitList]);
 
   const selectSupportUnit = (e: FormEvent<any>) => {
@@ -96,11 +97,11 @@ const UnitConfigView: React.FC = () => {
         </Form.Control>
         <div className="my-3">
           <Button className="mr-3" onClick={addUnit}
-            disabled={supportUnitList.map(r => r.unitName).includes(selectedSupportUnit.unitName)}>追加</Button>
+            disabled={supportUnitList.map(r => r.unitName).includes(selectedSupportUnit.unitName) || selectedSupportUnit.unitName === ''}>追加</Button>
           <Button className="mr-3" onClick={loadUnit} variant="warning"
             disabled={unitName === ''}>読込み</Button>
           <Button className="mr-3" onClick={updateUnit} variant="warning"
-            disabled={supportUnitList.map(r => r.unitName).includes(selectedSupportUnit.unitName) && selectedSupportUnit.unitName !== unitName}>上書き</Button>
+            disabled={(supportUnitList.map(r => r.unitName).includes(selectedSupportUnit.unitName) && selectedSupportUnit.unitName !== unitName) || selectedSupportUnit.unitName === ''}>上書き</Button>
           <Button  onClick={deleteUnit} variant="danger"
              disabled={unitName === '' || supportUnitList.length === 0}>削除</Button>
         </div>
