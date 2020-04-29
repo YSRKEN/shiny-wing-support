@@ -2,81 +2,10 @@ import React from 'react';
 import { Form, Table } from 'react-bootstrap';
 import IdolParameterInput from 'component/IdolParameterInput';
 import IdolNameInput from 'component/IdolNameInput';
-
-// アピール効果の倍率入力用フォーム
-const AppealMagnificationInput: React.FC<{
-  value: string
-}> = ({ value }) => {
-  const temp: { value: string, label: string }[] = [];
-  for (let i = 0; i <= 5; i += 1) {
-    for (let j = 0; j <= 9; j += 1) {
-      if (i === 5 && j !== 0) {
-        continue;
-      }
-      const temp2 = `${i}.${j}`;
-      temp.push({ value: temp2, label: `${temp2}倍` });
-    }
-  }
-  return (
-    <Form.Control size="sm" defaultValue={value} as="select">
-      {temp.map((record) => <option key={record.value} value={record.value}>{record.label}</option>)}
-    </Form.Control>
-  );
-};
-
-// 補正効果入力用フォーム
-const IdolBuffInput: React.FC<{
-  value: string
-}> = ({ value }) => {
-  const temp: { value: string, label: string }[] = [];
-  for (let i = -100; i <= 100; i += 1) {
-    temp.push({ value: `${i}`, label: `${i}％` });
-  }
-  return (
-    <Form.Control size="sm" defaultValue={value} as="select">
-      {temp.map((record) => <option key={record.value} value={record.value}>{record.label}</option>)}
-    </Form.Control>
-  );
-};
-
-// ライバルアイドルの設定フォーム
-const IdolAppealInput: React.FC<{
-  value: string
-}> = ({ value }) => {
-  return (
-    <Form.Control size="sm" defaultValue={value} as="select">
-      <option value="perfect">PERFECT</option>
-      <option value="good">GOOD</option>
-      <option value="normal">NORMAL</option>
-      <option value="bad">BAD</option>
-      <option value="memorial">思い出</option>
-    </Form.Control>
-  );
-};
-
-// シミュレーションのアピール結果のフォーム
-const AppealTypeInput: React.FC<{
-  value: string,
-  memorialFlg: boolean
-}> = ({ value, memorialFlg }) => {
-  if (memorialFlg) {
-    return (
-      <Form.Control size="sm" defaultValue={value} as="select">
-        <option value="good">GOOD</option>
-        <option value="bad">BAD</option>
-      </Form.Control>
-    );
-  } else {
-    return (
-      <Form.Control size="sm" defaultValue={value} as="select">
-        <option value="perfect">PERFECT</option>
-        <option value="good">GOOD</option>
-        <option value="normal">NORMAL</option>
-        <option value="bad">BAD</option>
-      </Form.Control>
-    );
-  }
-};
+import AppealMagnificationInput from 'component/AppealMagnificationInput';
+import IdolBuffInput from 'component/IdolBuffInput';
+import IdolAppealInput from 'component/IdolAppealInput';
+import AppealTypeInput from 'component/AppealTypeInput';
 
 // シミュレーション設定
 const WingSimulationView: React.FC = () => (
