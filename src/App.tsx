@@ -4,6 +4,7 @@ import 'App.css';
 import UnitConfigView from 'container/UnitConfigView';
 import WingSimulationView from 'container/WingSimulationView';
 import { UnitConfigContext, useUnitConfigState } from 'state/UnitConfigState';
+import { WingSimulationContext, useWingSimulationState } from 'state/WingSimulationState';
 
 const App: React.FC = () => (
   <Container>
@@ -22,7 +23,9 @@ const App: React.FC = () => (
             </UnitConfigContext.Provider>
           </Tab>
           <Tab eventKey="wing" title="WINGシミュレーション">
-            <WingSimulationView />
+            <WingSimulationContext.Provider value={useWingSimulationState()}>
+              <WingSimulationView />
+            </WingSimulationContext.Provider>
           </Tab>
         </Tabs>
       </Col>
