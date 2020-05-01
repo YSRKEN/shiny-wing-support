@@ -16,7 +16,7 @@ const App: React.FC = () => (
     </Row>
     <Row className="my-3">
       <Col>
-        <Tabs defaultActiveKey="unit" id="application-mode" transition={false}>
+        <Tabs defaultActiveKey="wing" id="application-mode" transition={false}>
           <Tab eventKey="unit" title="ユニット編成">
             <UnitConfigContext.Provider value={useUnitConfigState()}>
               <UnitConfigView />

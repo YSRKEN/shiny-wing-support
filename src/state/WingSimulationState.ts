@@ -12,7 +12,11 @@ const DEFAULT_IDOL: IdolParameter = {
 type ActionType = 'setIdolName'
   | 'setIdolVocal'
   | 'setIdolDance'
-  | 'setIdolVisual';
+  | 'setIdolVisual'
+  | 'setMemorialLevel'
+  | 'setMemorialVocal'
+  | 'setMemorialDance'
+  | 'setMemorialVisual';
 
 // Action
 interface Action {
@@ -23,6 +27,10 @@ interface Action {
 // 状態
 interface WingSimulationState {
   produceIdol: IdolParameter;
+  memorialLevel: number;
+  memorialVocal: string;
+  memorialDance: string;
+  memorialVisual: string;
   dispatch: (action: Action) => void;
 }
 
@@ -32,6 +40,10 @@ export const useWingSimulationState = () => {
   const [produceIdol, setProduceIdol] = useState<IdolParameter>(
     loadData('produceIdol', DEFAULT_IDOL)
   );
+  const [memorialLevel, setMemorialLevel] = useState(3);
+  const [memorialVocal, setMemorialVocal] = useState('0.0');
+  const [memorialDance, setMemorialDance] = useState('0.0');
+  const [memorialVisual, setMemorialVisual] = useState('0.6');
 
   // データの自動保存
   useEffect(() => {
@@ -43,22 +55,39 @@ export const useWingSimulationState = () => {
     console.debug(action);
     switch (action.type) {
       case 'setIdolName':
-        setProduceIdol({...produceIdol, name: action.message });
+        setProduceIdol({ ...produceIdol, name: action.message });
         break;
       case 'setIdolVocal':
-        setProduceIdol({...produceIdol, vocal: parseInt(action.message, 10) });
+        setProduceIdol({ ...produceIdol, vocal: parseInt(action.message, 10) });
         break;
       case 'setIdolDance':
-        setProduceIdol({...produceIdol, dance: parseInt(action.message, 10) });
+        setProduceIdol({ ...produceIdol, dance: parseInt(action.message, 10) });
         break;
       case 'setIdolVisual':
-        setProduceIdol({...produceIdol, visual: parseInt(action.message, 10) });
+        setProduceIdol({ ...produceIdol, visual: parseInt(action.message, 10) });
         break;
+      case 'setMemorialLevel':
+        setMemorialLevel(parseInt(action.message, 10));
+        break;
+      case 'setMemorialVocal':
+        setMemorialVocal(action.message);
+        break;
+      case 'setMemorialDance':
+        setMemorialDance(action.message);
+        break;
+      case 'setMemorialVisual':
+        setMemorialVisual(action.message);
+        break;
+
     }
   };
 
   return {
     produceIdol,
+    memorialLevel,
+    memorialVocal,
+    memorialDance,
+    memorialVisual,
     dispatch
   };
 };
