@@ -8,82 +8,98 @@ import IdolAppealInput from 'component/IdolAppealInput';
 import AppealTypeInput from 'component/AppealTypeInput';
 import { WingSimulationContext } from 'state/WingSimulationState';
 
-// シミュレーション設定
-const WingSimulationView: React.FC = () => {
-  const { produceIdol, memorialLevel, memorialVocal, memorialDance, memorialVisual, dispatch } = useContext(WingSimulationContext);
+// プロデュースアイドルに関するフォーム
+const ProduceIdolParameterInput: React.FC = () => {
+  const { produceIdol, dispatch } = useContext(WingSimulationContext);
 
   // プロデュースアイドルの情報が変更された際の処理
-  const setIdolName = (name: string) => dispatch({type: 'setIdolName', message: `${name}`});
-  const setIdolVocal = (vocal: number) => dispatch({type: 'setIdolVocal', message: `${vocal}`});
-  const setIdolDance = (dance: number) => dispatch({type: 'setIdolDance', message: `${dance}`});
-  const setIdolVisual= (visual: number) => dispatch({type: 'setIdolVisual', message: `${visual}`});
+  const setIdolName = (name: string) => dispatch({ type: 'setIdolName', message: `${name}` });
+  const setIdolVocal = (vocal: number) => dispatch({ type: 'setIdolVocal', message: `${vocal}` });
+  const setIdolDance = (dance: number) => dispatch({ type: 'setIdolDance', message: `${dance}` });
+  const setIdolVisual = (visual: number) => dispatch({ type: 'setIdolVisual', message: `${visual}` });
+
+  return (
+    <Form.Group className="mt-3 mb-0">
+      <Form.Label>アイドル設定</Form.Label>
+      <Table bordered responsive size="sm" className="text-nowrap">
+        <thead>
+          <tr>
+            <th>アイドル名</th>
+            <th>Vo</th>
+            <th>Da</th>
+            <th>Vi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <IdolParameterInput
+            name={produceIdol.name}
+            vocal={produceIdol.vocal}
+            dance={produceIdol.dance}
+            visual={produceIdol.visual}
+            setName={setIdolName}
+            setVocal={setIdolVocal}
+            setDance={setIdolDance}
+            setVisual={setIdolVisual} />
+        </tbody>
+      </Table>
+    </Form.Group>
+  );
+};
+
+// 思い出アピールに関するフォーム
+const MemorialParameterInput: React.FC = () => {
+  const { memorialLevel, memorialVocal, memorialDance, memorialVisual, dispatch } = useContext(WingSimulationContext);
 
   // 思い出アピールの情報が変更された際の処理
   const onChangeMemorialLevel = (e: FormEvent<any>) => {
-    dispatch({type: 'setMemorialLevel', message: e.currentTarget.value});
+    dispatch({ type: 'setMemorialLevel', message: e.currentTarget.value });
   };
-  const setMemorialVocal = (vocal: string) => dispatch({type: 'setMemorialVocal', message: `${vocal}`});
-  const setMemorialDance = (dance: string) => dispatch({type: 'setMemorialDance', message: `${dance}`});
-  const setMemorialVisual = (visual: string) => dispatch({type: 'setMemorialVisual', message: `${visual}`});
+  const setMemorialVocal = (vocal: string) => dispatch({ type: 'setMemorialVocal', message: `${vocal}` });
+  const setMemorialDance = (dance: string) => dispatch({ type: 'setMemorialDance', message: `${dance}` });
+  const setMemorialVisual = (visual: string) => dispatch({ type: 'setMemorialVisual', message: `${visual}` });
 
   return (
+    <Form.Group className="my-0">
+      <Form.Label>
+        思い出アピール
+    </Form.Label>
+      <Table bordered responsive size="sm" className="text-nowrap">
+        <thead>
+          <tr>
+            <th>レベル</th>
+            <th>Voアピール</th>
+            <th>Daアピール</th>
+            <th>Viアピール</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <Form.Control size="sm" value={memorialLevel} as="select" onChange={onChangeMemorialLevel}>
+                <option value="0">Lv.0</option>
+                <option value="1">Lv.1</option>
+                <option value="2">Lv.2</option>
+                <option value="3">Lv.3</option>
+                <option value="4">Lv.4</option>
+                <option value="5">Lv.5</option>
+              </Form.Control>
+            </td>
+            <td><AppealMagnificationInput value={memorialVocal} setValue={setMemorialVocal} /></td>
+            <td><AppealMagnificationInput value={memorialDance} setValue={setMemorialDance} /></td>
+            <td><AppealMagnificationInput value={memorialVisual} setValue={setMemorialVisual} /></td>
+          </tr>
+        </tbody>
+      </Table>
+    </Form.Group>
+  );
+};
+
+// シミュレーション設定
+const WingSimulationView: React.FC = () => {
+  return (
     <Form>
-      <Form.Group className="mt-3 mb-0">
-        <Form.Label>アイドル設定</Form.Label>
-        <Table bordered responsive size="sm" className="text-nowrap">
-          <thead>
-            <tr>
-              <th>アイドル名</th>
-              <th>Vo</th>
-              <th>Da</th>
-              <th>Vi</th>
-            </tr>
-          </thead>
-          <tbody>
-            <IdolParameterInput
-              name={produceIdol.name}
-              vocal={produceIdol.vocal}
-              dance={produceIdol.dance}
-              visual={produceIdol.visual}
-              setName={setIdolName}
-              setVocal={setIdolVocal}
-              setDance={setIdolDance}
-              setVisual={setIdolVisual} />
-          </tbody>
-        </Table>
-      </Form.Group>
-      <Form.Group className="my-0">
-        <Form.Label>
-          思い出アピール
-      </Form.Label>
-        <Table bordered responsive size="sm" className="text-nowrap">
-          <thead>
-            <tr>
-              <th>レベル</th>
-              <th>Voアピール</th>
-              <th>Daアピール</th>
-              <th>Viアピール</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <Form.Control size="sm" value={memorialLevel} as="select" onChange={onChangeMemorialLevel}>
-                  <option value="0">Lv.0</option>
-                  <option value="1">Lv.1</option>
-                  <option value="2">Lv.2</option>
-                  <option value="3">Lv.3</option>
-                  <option value="4">Lv.4</option>
-                  <option value="5">Lv.5</option>
-                </Form.Control>
-              </td>
-              <td><AppealMagnificationInput value={memorialVocal} setValue={setMemorialVocal} /></td>
-              <td><AppealMagnificationInput value={memorialDance} setValue={setMemorialDance} /></td>
-              <td><AppealMagnificationInput value={memorialVisual} setValue={setMemorialVisual} /></td>
-            </tr>
-          </tbody>
-        </Table>
-      </Form.Group>
+      <ProduceIdolParameterInput />
+      <MemorialParameterInput />
       <Form.Group className="my-0">
         <Form.Label>
           オーディション設定
@@ -160,9 +176,9 @@ const WingSimulationView: React.FC = () => {
               <td><IdolNameInput name="甘奈" setName={(v: string) => { }} /></td>
             </tr>
             <tr>
-              <td><AppealMagnificationInput value="3.0" setValue={(v: string) => {}} /></td>
-              <td><AppealMagnificationInput value="2.0" setValue={(v: string) => {}} /></td>
-              <td><AppealMagnificationInput value="2.5" setValue={(v: string) => {}} /></td>
+              <td><AppealMagnificationInput value="3.0" setValue={(v: string) => { }} /></td>
+              <td><AppealMagnificationInput value="2.0" setValue={(v: string) => { }} /></td>
+              <td><AppealMagnificationInput value="2.5" setValue={(v: string) => { }} /></td>
             </tr>
           </tbody>
         </Table>
