@@ -40,15 +40,35 @@ export const useWingSimulationState = () => {
   const [produceIdol, setProduceIdol] = useState<IdolParameter>(
     loadData('produceIdol', DEFAULT_IDOL)
   );
-  const [memorialLevel, setMemorialLevel] = useState(3);
-  const [memorialVocal, setMemorialVocal] = useState('0.0');
-  const [memorialDance, setMemorialDance] = useState('0.0');
-  const [memorialVisual, setMemorialVisual] = useState('0.6');
+  const [memorialLevel, setMemorialLevel] = useState(
+    loadData('memorialLevel', 1)
+  );
+  const [memorialVocal, setMemorialVocal] = useState(
+    loadData('memorialVocal', '0.0')
+  );
+  const [memorialDance, setMemorialDance] = useState(
+    loadData('memorialDance', '0.0')
+  );
+  const [memorialVisual, setMemorialVisual] = useState(
+    loadData('memorialVisual', '0.0')
+  );
 
   // データの自動保存
   useEffect(() => {
     saveData('produceIdol', produceIdol);
   }, [produceIdol]);
+  useEffect(() => {
+    saveData('memorialLevel', memorialLevel);
+  }, [memorialLevel]);
+  useEffect(() => {
+    saveData('memorialVocal', memorialVocal);
+  }, [memorialVocal]);
+  useEffect(() => {
+    saveData('memorialDance', memorialDance);
+  }, [memorialDance]);
+  useEffect(() => {
+    saveData('memorialVisual', memorialVisual);
+  }, [memorialVisual]);
 
   // dispatch関数
   const dispatch = (action: Action) => {
