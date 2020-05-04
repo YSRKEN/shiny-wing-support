@@ -94,11 +94,12 @@ const MemorialParameterInput: React.FC = () => {
   );
 };
 
+// オーディション設定
 const AuditionWeekInput: React.FC = () => {
   const { auditionWeek, dispatch } = useContext(WingSimulationContext);
 
   const onChange = (e: FormEvent<any>) => {
-    dispatch({type: 'setAuditionWeek', message: `${e.currentTarget.value}`});
+    dispatch({ type: 'setAuditionWeek', message: `${e.currentTarget.value}` });
   };
 
   return (
@@ -114,6 +115,34 @@ const AuditionWeekInput: React.FC = () => {
   );
 };
 
+// シミュレーション設定(VoDaVi補正)
+const IdolBuffsInput: React.FC = () => {
+  const { buffVocal, buffDance, buffVisual, dispatch } = useContext(WingSimulationContext);
+
+  const setIdolVocal = (vocal: number) => dispatch({ type: 'setBuffVocal', message: `${vocal}` });
+  const setIdolDance = (dance: number) => dispatch({ type: 'setBuffDance', message: `${dance}` });
+  const setIdolVisual = (visual: number) => dispatch({ type: 'setBuffVisual', message: `${visual}` });
+
+  return (
+    <Table bordered responsive size="sm" className="text-nowrap">
+      <thead>
+        <tr>
+          <th>Vo補正</th>
+          <th>Da補正</th>
+          <th>Vi補正</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><IdolBuffInput value={buffVocal} setValue={setIdolVocal} /></td>
+          <td><IdolBuffInput value={buffDance} setValue={setIdolDance} /></td>
+          <td><IdolBuffInput value={buffVisual} setValue={setIdolVisual} /></td>
+        </tr>
+      </tbody>
+    </Table>
+  );
+};
+
 // シミュレーション設定
 const WingSimulationView: React.FC = () => {
   return (
@@ -126,22 +155,7 @@ const WingSimulationView: React.FC = () => {
         <Form.Label>
           シミュレーション設定
       </Form.Label>
-        <Table bordered responsive size="sm" className="text-nowrap">
-          <thead>
-            <tr>
-              <th>Vo補正</th>
-              <th>Da補正</th>
-              <th>Vi補正</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><IdolBuffInput value="20" /></td>
-              <td><IdolBuffInput value="0" /></td>
-              <td><IdolBuffInput value="0" /></td>
-            </tr>
-          </tbody>
-        </Table>
+        <IdolBuffsInput />
         <Table bordered responsive size="sm" className="text-nowrap">
           <thead>
             <tr>

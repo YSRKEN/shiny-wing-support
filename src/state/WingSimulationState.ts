@@ -17,7 +17,10 @@ type ActionType = 'setIdolName'
   | 'setMemorialVocal'
   | 'setMemorialDance'
   | 'setMemorialVisual'
-  | 'setAuditionWeek';
+  | 'setAuditionWeek'
+  | 'setBuffVocal'
+  | 'setBuffDance'
+  | 'setBuffVisual';
 
 // Action
 interface Action {
@@ -33,6 +36,9 @@ interface WingSimulationState {
   memorialDance: string;
   memorialVisual: string;
   auditionWeek: number;
+  buffVocal: number;
+  buffDance: number;
+  buffVisual: number;
   dispatch: (action: Action) => void;
 }
 
@@ -57,6 +63,15 @@ export const useWingSimulationState = () => {
   const [auditionWeek, setAuditionWeek] = useState(
     loadData('auditionWeek', 0)
   );
+  const [buffVocal, setBuffVocal] = useState(
+    loadData('buffVocal', 20)
+  );
+  const [buffDance, setBuffDance] = useState(
+    loadData('buffDance', 0)
+  );
+  const [buffVisual, setBuffVisual] = useState(
+    loadData('buffVisual', 0)
+  );
 
   // データの自動保存
   useEffect(() => {
@@ -77,6 +92,15 @@ export const useWingSimulationState = () => {
   useEffect(() => {
     saveData('auditionWeek', auditionWeek);
   }, [auditionWeek]);
+  useEffect(() => {
+    saveData('buffVocal', buffVocal);
+  }, [buffVocal]);
+  useEffect(() => {
+    saveData('buffDance', buffDance);
+  }, [buffDance]);
+  useEffect(() => {
+    saveData('buffVisual', buffVisual);
+  }, [buffVisual]);
 
   // dispatch関数
   const dispatch = (action: Action) => {
@@ -109,6 +133,15 @@ export const useWingSimulationState = () => {
       case 'setAuditionWeek':
         setAuditionWeek(parseInt(action.message, 10));
         break;
+      case 'setBuffVocal':
+        setBuffVocal(parseInt(action.message, 10));
+        break;
+      case 'setBuffDance':
+        setBuffDance(parseInt(action.message, 10));
+        break;
+      case 'setBuffVisual':
+        setBuffVisual(parseInt(action.message, 10));
+        break;
     }
   };
 
@@ -119,6 +152,9 @@ export const useWingSimulationState = () => {
     memorialDance,
     memorialVisual,
     auditionWeek,
+    buffVocal,
+    buffDance,
+    buffVisual,
     dispatch
   };
 };
