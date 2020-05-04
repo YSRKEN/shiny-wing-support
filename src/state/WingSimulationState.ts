@@ -16,7 +16,8 @@ type ActionType = 'setIdolName'
   | 'setMemorialLevel'
   | 'setMemorialVocal'
   | 'setMemorialDance'
-  | 'setMemorialVisual';
+  | 'setMemorialVisual'
+  | 'setAuditionWeek';
 
 // Action
 interface Action {
@@ -31,6 +32,7 @@ interface WingSimulationState {
   memorialVocal: string;
   memorialDance: string;
   memorialVisual: string;
+  auditionWeek: number;
   dispatch: (action: Action) => void;
 }
 
@@ -52,6 +54,9 @@ export const useWingSimulationState = () => {
   const [memorialVisual, setMemorialVisual] = useState(
     loadData('memorialVisual', '0.0')
   );
+  const [auditionWeek, setAuditionWeek] = useState(
+    loadData('auditionWeek', 0)
+  );
 
   // データの自動保存
   useEffect(() => {
@@ -69,6 +74,9 @@ export const useWingSimulationState = () => {
   useEffect(() => {
     saveData('memorialVisual', memorialVisual);
   }, [memorialVisual]);
+  useEffect(() => {
+    saveData('auditionWeek', auditionWeek);
+  }, [auditionWeek]);
 
   // dispatch関数
   const dispatch = (action: Action) => {
@@ -98,7 +106,9 @@ export const useWingSimulationState = () => {
       case 'setMemorialVisual':
         setMemorialVisual(action.message);
         break;
-
+      case 'setAuditionWeek':
+        setAuditionWeek(parseInt(action.message, 10));
+        break;
     }
   };
 
@@ -108,6 +118,7 @@ export const useWingSimulationState = () => {
     memorialVocal,
     memorialDance,
     memorialVisual,
+    auditionWeek,
     dispatch
   };
 };

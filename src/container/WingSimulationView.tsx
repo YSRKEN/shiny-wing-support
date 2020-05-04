@@ -94,21 +94,33 @@ const MemorialParameterInput: React.FC = () => {
   );
 };
 
+const AuditionWeekInput: React.FC = () => {
+  const { auditionWeek, dispatch } = useContext(WingSimulationContext);
+
+  const onChange = (e: FormEvent<any>) => {
+    dispatch({type: 'setAuditionWeek', message: `${e.currentTarget.value}`});
+  };
+
+  return (
+    <Form.Group className="my-0">
+      <Form.Label>
+        オーディション設定
+  </Form.Label>
+      <Form.Control size="sm" value={auditionWeek} as="select" onChange={onChange}>
+        <option value="1">準決勝　(真乃・灯織・咲耶・結華・霧子)</option>
+        <option value="0">決勝　(樹里・凛世・夏葉・千雪・真乃)</option>
+      </Form.Control>
+    </Form.Group>
+  );
+};
+
 // シミュレーション設定
 const WingSimulationView: React.FC = () => {
   return (
     <Form>
       <ProduceIdolParameterInput />
       <MemorialParameterInput />
-      <Form.Group className="my-0">
-        <Form.Label>
-          オーディション設定
-      </Form.Label>
-        <Form.Control size="sm" defaultValue="1" as="select">
-          <option value="0">準決勝　(真乃・灯織・咲耶・結華・霧子)</option>
-          <option value="1">決勝　(樹里・凛世・夏葉・千雪・真乃)</option>
-        </Form.Control>
-      </Form.Group>
+      <AuditionWeekInput />
       <hr style={{ borderWidth: 2, borderColor: 'black' }} />
       <Form.Group className="my-0">
         <Form.Label>
