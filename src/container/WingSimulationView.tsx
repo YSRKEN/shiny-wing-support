@@ -115,6 +115,54 @@ const AuditionWeekInput: React.FC = () => {
   );
 };
 
+// シミュレーション設定(審査員設定)
+const JudgeConfigInput: React.FC = () => {
+  const {judgeVocal, judgeDance, judgeVisual, auditionTrend, dispatch} = useContext(WingSimulationContext);
+
+  const onChangeVocal = (e: FormEvent<any>) => {
+    dispatch({type: 'setJudgeVocal', message: e.currentTarget.value});
+  };
+  const onChangeDance = (e: FormEvent<any>) => {
+    dispatch({type: 'setJudgeDance', message: e.currentTarget.value});
+  };
+  const onChangeVisual = (e: FormEvent<any>) => {
+    dispatch({type: 'setJudgeVisual', message: e.currentTarget.value});
+  };
+  const onChangeTrend = (e: FormEvent<any>) => {
+    dispatch({type: 'setAuditionTrend', message: e.currentTarget.value});
+  };
+
+  return (<Table size="sm" bordered>
+    <thead>
+      <tr>
+        <th>パターン</th>
+        <th>Vo審査員</th>
+        <th>Da審査員</th>
+        <th>Vi審査員</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th>満足度</th>
+        <td><Form.Control size="sm" value={judgeVocal} onChange={onChangeVocal} /></td>
+        <td><Form.Control size="sm" value={judgeDance} onChange={onChangeDance} /></td>
+        <td><Form.Control size="sm" value={judgeVisual} onChange={onChangeVisual} /></td>
+      </tr>
+      <tr>
+        <th>流行順位</th>
+        <td colSpan={3}><Form.Control size="sm" as="select" value={auditionTrend} onChange={onChangeTrend}>
+          <option value="vodavi">1位：Vo,2位：Da,3位：Vi</option>
+          <option value="vovida">1位：Vo,2位：Vi,3位：Da</option>
+          <option value="davovi">1位：Da,2位：Vo,3位：Vi</option>
+          <option value="davivo">1位：Da,2位：Vi,3位：Vo</option>
+          <option value="vivoda">1位：Vi,2位：Vo,3位：Da</option>
+          <option value="vidavo">1位：Vi,2位：Da,3位：Vo</option>
+        </Form.Control></td>
+      </tr>
+    </tbody>
+  </Table>);
+};
+
 // シミュレーション設定(VoDaVi補正)
 const IdolBuffsInput: React.FC = () => {
   const { buffVocal, buffDance, buffVisual, dispatch } = useContext(WingSimulationContext);
@@ -267,6 +315,7 @@ const WingSimulationView: React.FC = () => {
         <Form.Label>
           シミュレーション設定
       </Form.Label>
+        <JudgeConfigInput />
         <IdolBuffsInput />
         <AuditionIdolInput />
         <TurnAndHandInput />

@@ -65,7 +65,11 @@ type ActionType = 'setIdolName'
   | 'setHandIdol'
   | 'setHandPower'
   | 'setAppealTarget'
-  | 'setAppealResult';
+  | 'setAppealResult'
+  | 'setJudgeVocal'
+  | 'setJudgeDance'
+  | 'setJudgeVisual'
+  | 'setAuditionTrend';
 
 // Action
 interface Action {
@@ -91,6 +95,10 @@ interface WingSimulationState {
   handPowerList: string[];
   appealTarget: AuditionAppealType;
   appealResult: AuditionAppealRank;
+  judgeVocal: number;
+  judgeDance: number;
+  judgeVisual: number;
+  auditionTrend: string;
   dispatch: (action: Action) => void;
 }
 
@@ -144,6 +152,18 @@ export const useWingSimulationState = () => {
   const [appealResult, setAppealResult] = useState<AuditionAppealRank>(
     loadData<AuditionAppealRank>('appealResult', 'perfect')
   );
+  const [judgeVocal, setJudgeVocal] = useState(
+    loadData('judgeVocal', 0)
+  );
+  const [judgeDance, setJudgeDance] = useState(
+    loadData('judgeDance', 0)
+  );
+  const [judgeVisual, setJudgeVisual] = useState(
+    loadData('judgeVisual', 0)
+  );
+  const [auditionTrend, setAuditionTrend] = useState(
+    loadData('auditionTrend', 'vodavi')
+  );
 
   // データの自動保存
   useEffect(() => {
@@ -191,6 +211,18 @@ export const useWingSimulationState = () => {
   useEffect(() => {
     saveData('appealResult', appealResult);
   }, [appealResult]);
+  useEffect(() => {
+    saveData('judgeVocal', judgeVocal);
+  }, [judgeVocal]);
+  useEffect(() => {
+    saveData('judgeDance', judgeDance);
+  }, [judgeDance]);
+  useEffect(() => {
+    saveData('judgeVisual', judgeVisual);
+  }, [judgeVisual]);
+  useEffect(() => {
+    saveData('auditionTrend', auditionTrend);
+  }, [auditionTrend]);
 
   // dispatch関数
   const dispatch = (action: Action) => {
@@ -267,6 +299,18 @@ export const useWingSimulationState = () => {
       case 'setAppealResult':
         setAppealResult(action.message as AuditionAppealRank);
         break;
+      case 'setJudgeVocal':
+        setJudgeVocal(parseInt(action.message, 10));
+        break;
+      case 'setJudgeDance':
+        setJudgeDance(parseInt(action.message, 10));
+        break;
+      case 'setJudgeVisual':
+        setJudgeVisual(parseInt(action.message, 10));
+        break;
+      case 'setAuditionTrend':
+        setAuditionTrend(action.message);
+        break;
     }
   };
 
@@ -287,6 +331,10 @@ export const useWingSimulationState = () => {
     handPowerList,
     appealTarget,
     appealResult,
+    judgeVocal,
+    judgeDance,
+    judgeVisual,
+    auditionTrend,
     dispatch
   };
 };
