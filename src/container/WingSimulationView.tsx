@@ -239,7 +239,7 @@ const SimulationResultView: React.FC = () => {
     <Form.Group className="my-0">
       <Form.Label>
         シミュレーション結果
-  </Form.Label>
+      </Form.Label>
       <div className="d-flex mb-3">
         <Form.Control size="sm" className="mr-3" value={appealTarget} as="select" onChange={onChangeTarget}>
           <option value="vocal">Vocal</option>
@@ -247,7 +247,7 @@ const SimulationResultView: React.FC = () => {
           <option value="visual">Visual</option>
           <option value="memorial">思い出アピール</option>
         </Form.Control>
-        <AppealTypeInput value={appealResult} memorialFlg={appealTarget == 'memorial'} setValue={setResult} />
+        <AppealTypeInput value={appealResult} memorialFlg={appealTarget === 'memorial'} setValue={setResult} />
       </div>
       <Form.Control as="textarea" rows={10} readOnly disabled
         defaultValue="ここに計算結果が出る" />
