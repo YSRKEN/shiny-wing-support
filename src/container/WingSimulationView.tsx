@@ -148,7 +148,7 @@ const AuditionIdolInput: React.FC = () => {
   const { auditionIdolList, auditionIdolAppealRankList, dispatch } = useContext(WingSimulationContext);
 
   const setRank = (index: number, rank: string) => {
-    dispatch({type: 'setIdolAppealRank', message: `${index},${rank}`});
+    dispatch({ type: 'setIdolAppealRank', message: `${index},${rank}` });
   };
 
   return (
@@ -156,7 +156,7 @@ const AuditionIdolInput: React.FC = () => {
       <thead>
         <tr>
           {
-            auditionIdolList.map(name =>  <th key={name}>{name}</th>)
+            auditionIdolList.map(name => <th key={name}>{name}</th>)
           }
         </tr>
       </thead>
@@ -164,9 +164,59 @@ const AuditionIdolInput: React.FC = () => {
         <tr>
           {
             auditionIdolAppealRankList.map((rank, index) => {
-              return <td key={index}><IdolAppealInput value={rank} setValue={(r: string) => setRank(index, r)}/></td>;
+              return <td key={index}><IdolAppealInput value={rank} setValue={(r: string) => setRank(index, r)} /></td>;
             })
           }
+        </tr>
+      </tbody>
+    </Table>
+  );
+};
+
+// シミュレーション設定(ターン数・選択肢)
+const TurnAndHandInput: React.FC = () => {
+  const { auditionTurn, handIdolList, handPowerList, dispatch } = useContext(WingSimulationContext);
+
+  const onChangeTurn = (e: FormEvent<any>) => {
+    dispatch({type: 'setAuditionTurn', message: e.currentTarget.value});
+  };
+  const setHandIdol = (index: number, hand: string) => {
+    dispatch({type: 'setHandIdol', message: `${index},${hand}`});
+  };
+  const setHandPower = (index: number, power: string) => {
+    dispatch({type: 'setHandPower', message: `${index},${power}`});
+  };
+
+  return (
+    <Table bordered responsive size="sm" className="text-nowrap">
+      <thead>
+        <tr>
+          <th>ターン</th>
+          <th>選択1</th>
+          <th>選択2</th>
+          <th>選択3</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td className="align-middle" rowSpan={2}>
+            <Form.Control value={auditionTurn} as="select" onChange={onChangeTurn}>
+              <option value="1">TURN 1</option>
+              <option value="2">TURN 2</option>
+              <option value="3">TURN 3</option>
+              <option value="4">TURN 4</option>
+              <option value="5">TURN 5</option>
+              <option value="6">TURN 6</option>
+            </Form.Control>
+          </td>
+          <td><IdolNameInput name={handIdolList[0]} setName={(v: string) => setHandIdol(0, v)} /></td>
+          <td><IdolNameInput name={handIdolList[1]} setName={(v: string) => setHandIdol(1, v)} /></td>
+          <td><IdolNameInput name={handIdolList[2]} setName={(v: string) => setHandIdol(2, v)} /></td>
+        </tr>
+        <tr>
+          <td><AppealMagnificationInput value={handPowerList[0]} setValue={(v: string) => setHandPower(0, v)} /></td>
+          <td><AppealMagnificationInput value={handPowerList[1]} setValue={(v: string) => setHandPower(1, v)} /></td>
+          <td><AppealMagnificationInput value={handPowerList[2]} setValue={(v: string) => setHandPower(2, v)} /></td>
         </tr>
       </tbody>
     </Table>
@@ -187,38 +237,7 @@ const WingSimulationView: React.FC = () => {
       </Form.Label>
         <IdolBuffsInput />
         <AuditionIdolInput />
-        <Table bordered responsive size="sm" className="text-nowrap">
-          <thead>
-            <tr>
-              <th>ターン</th>
-              <th>選択1</th>
-              <th>選択2</th>
-              <th>選択3</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td className="align-middle" rowSpan={2}>
-                <Form.Control defaultValue="3" as="select">
-                  <option value="1">TURN 1</option>
-                  <option value="2">TURN 2</option>
-                  <option value="3">TURN 3</option>
-                  <option value="4">TURN 4</option>
-                  <option value="5">TURN 5</option>
-                  <option value="6">TURN 6</option>
-                </Form.Control>
-              </td>
-              <td><IdolNameInput name="霧子" setName={(v: string) => { }} /></td>
-              <td><IdolNameInput name="真乃" setName={(v: string) => { }} /></td>
-              <td><IdolNameInput name="甘奈" setName={(v: string) => { }} /></td>
-            </tr>
-            <tr>
-              <td><AppealMagnificationInput value="3.0" setValue={(v: string) => { }} /></td>
-              <td><AppealMagnificationInput value="2.0" setValue={(v: string) => { }} /></td>
-              <td><AppealMagnificationInput value="2.5" setValue={(v: string) => { }} /></td>
-            </tr>
-          </tbody>
-        </Table>
+        <TurnAndHandInput />
       </Form.Group>
       <hr style={{ borderWidth: 2, borderColor: 'black' }} />
       <Form.Group className="my-0">

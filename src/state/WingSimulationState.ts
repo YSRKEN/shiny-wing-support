@@ -59,7 +59,10 @@ type ActionType = 'setIdolName'
   | 'setBuffVocal'
   | 'setBuffDance'
   | 'setBuffVisual'
-  | 'setIdolAppealRank';
+  | 'setIdolAppealRank'
+  | 'setAuditionTurn'
+  | 'setHandIdol'
+  | 'setHandPower';
 
 // Action
 interface Action {
@@ -80,6 +83,9 @@ interface WingSimulationState {
   buffVisual: number;
   auditionIdolList: string[];
   auditionIdolAppealRankList: AuditionAppealRank[];
+  auditionTurn: number;
+  handIdolList: string[];
+  handPowerList: string[];
   dispatch: (action: Action) => void;
 }
 
@@ -118,6 +124,15 @@ export const useWingSimulationState = () => {
       'good', 'perfect', 'good', 'normal', 'normal'
     ] as AuditionAppealRank[])
   );
+  const [auditionTurn, setAuditionTurn] = useState(
+    loadData('auditionTurn', 3)
+  );
+  const [handIdolList, setHandIdolList] = useState(
+    loadData('handIdolList', ['霧子', '真乃', '甘奈'])
+  );
+  const [handPowerList, setHandPowerList] = useState(
+    loadData('handPowerList', ['3.0', '2.0', '2.5'])
+  );
 
   // データの自動保存
   useEffect(() => {
@@ -150,6 +165,15 @@ export const useWingSimulationState = () => {
   useEffect(() => {
     saveData('auditionIdolAppealRankList', auditionIdolAppealRankList);
   }, [auditionIdolAppealRankList]);
+  useEffect(() => {
+    saveData('auditionTurn', auditionTurn);
+  }, [auditionTurn]);
+  useEffect(() => {
+    saveData('handIdolList', handIdolList);
+  }, [handIdolList]);
+  useEffect(() => {
+    saveData('handPowerList', handPowerList);
+  }, [handPowerList]);
 
   // dispatch関数
   const dispatch = (action: Action) => {
@@ -196,6 +220,24 @@ export const useWingSimulationState = () => {
         const temp2 = action.message.split(',');
         temp[parseInt(temp2[0], 10)] = temp2[1] as AuditionAppealRank;
         setAuditionIdolAppealRankList(temp);
+        break;
+      };
+      case 'setAuditionTurn':
+        setAuditionTurn(parseInt(action.message, 10));
+        break;
+      case 'setHandIdol': {
+        const temp = [...handIdolList];
+        const temp2 = action.message.split(',');
+        temp[parseInt(temp2[0], 10)] = temp2[1];
+        setHandIdolList(temp);
+        break;
+      };
+      case 'setHandPower': {
+        const temp = [...handPowerList];
+        const temp2 = action.message.split(',');
+        temp[parseInt(temp2[0], 10)] = temp2[1];
+        setHandPowerList(temp);
+        break;
       };
     }
   };
@@ -212,6 +254,9 @@ export const useWingSimulationState = () => {
     buffVisual,
     auditionIdolList: RIVAL_DATA[auditionWeek].map(r => r.name),
     auditionIdolAppealRankList,
+    auditionTurn,
+    handIdolList,
+    handPowerList,
     dispatch
   };
 };
