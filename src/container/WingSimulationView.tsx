@@ -108,8 +108,8 @@ const AuditionWeekInput: React.FC = () => {
         オーディション設定
   </Form.Label>
       <Form.Control size="sm" value={auditionWeek} as="select" onChange={onChange}>
-        <option value="1">準決勝　(真乃・灯織・咲耶・結華・霧子)</option>
-        <option value="0">決勝　(樹里・凛世・夏葉・千雪・真乃)</option>
+        <option value="1">準決勝　(霧子・結華・咲耶・灯織・真乃)</option>
+        <option value="0">決勝　(真乃・千雪・夏葉・凛世・樹里)</option>
       </Form.Control>
     </Form.Group>
   );
@@ -143,6 +143,36 @@ const IdolBuffsInput: React.FC = () => {
   );
 };
 
+// シミュレーション設定(ライバル設定)
+const AuditionIdolInput: React.FC = () => {
+  const { auditionIdolList, auditionIdolAppealRankList, dispatch } = useContext(WingSimulationContext);
+
+  const setRank = (index: number, rank: string) => {
+    dispatch({type: 'setIdolAppealRank', message: `${index},${rank}`});
+  };
+
+  return (
+    <Table bordered responsive size="sm" className="text-nowrap">
+      <thead>
+        <tr>
+          {
+            auditionIdolList.map(name =>  <th key={name}>{name}</th>)
+          }
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          {
+            auditionIdolAppealRankList.map((rank, index) => {
+              return <td key={index}><IdolAppealInput value={rank} setValue={(r: string) => setRank(index, r)}/></td>;
+            })
+          }
+        </tr>
+      </tbody>
+    </Table>
+  );
+};
+
 // シミュレーション設定
 const WingSimulationView: React.FC = () => {
   return (
@@ -156,26 +186,7 @@ const WingSimulationView: React.FC = () => {
           シミュレーション設定
       </Form.Label>
         <IdolBuffsInput />
-        <Table bordered responsive size="sm" className="text-nowrap">
-          <thead>
-            <tr>
-              <th>樹里</th>
-              <th>凛世</th>
-              <th>夏葉</th>
-              <th>千雪</th>
-              <th>真乃</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><IdolAppealInput value="good" /></td>
-              <td><IdolAppealInput value="perfect" /></td>
-              <td><IdolAppealInput value="good" /></td>
-              <td><IdolAppealInput value="normal" /></td>
-              <td><IdolAppealInput value="normal" /></td>
-            </tr>
-          </tbody>
-        </Table>
+        <AuditionIdolInput />
         <Table bordered responsive size="sm" className="text-nowrap">
           <thead>
             <tr>
