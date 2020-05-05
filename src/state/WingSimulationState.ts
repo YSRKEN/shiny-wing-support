@@ -105,124 +105,50 @@ interface WingSimulationState {
 // 状態の生成
 export const useWingSimulationState = () => {
   // 状態定義
-  const [produceIdol, setProduceIdol] = useState<IdolParameter>(
-    loadData('produceIdol', DEFAULT_IDOL)
-  );
-  const [memorialLevel, setMemorialLevel] = useState(
-    loadData('memorialLevel', 1)
-  );
-  const [memorialVocal, setMemorialVocal] = useState(
-    loadData('memorialVocal', '0.0')
-  );
-  const [memorialDance, setMemorialDance] = useState(
-    loadData('memorialDance', '0.0')
-  );
-  const [memorialVisual, setMemorialVisual] = useState(
-    loadData('memorialVisual', '0.0')
-  );
-  const [auditionWeek, setAuditionWeek] = useState(
-    loadData('auditionWeek', 0)
-  );
-  const [buffVocal, setBuffVocal] = useState(
-    loadData('buffVocal', 20)
-  );
-  const [buffDance, setBuffDance] = useState(
-    loadData('buffDance', 0)
-  );
-  const [buffVisual, setBuffVisual] = useState(
-    loadData('buffVisual', 0)
-  );
+  const [produceIdol, setProduceIdol] = useState<IdolParameter>(loadData('produceIdol', DEFAULT_IDOL));
+  const [memorialLevel, setMemorialLevel] = useState(loadData('memorialLevel', 1));
+  const [memorialVocal, setMemorialVocal] = useState(loadData('memorialVocal', '0.0'));
+  const [memorialDance, setMemorialDance] = useState(loadData('memorialDance', '0.0'));
+  const [memorialVisual, setMemorialVisual] = useState(loadData('memorialVisual', '0.0'));
+  const [auditionWeek, setAuditionWeek] = useState(loadData('auditionWeek', 0));
+  const [buffVocal, setBuffVocal] = useState(loadData('buffVocal', 20));
+  const [buffDance, setBuffDance] = useState(loadData('buffDance', 0));
+  const [buffVisual, setBuffVisual] = useState(loadData('buffVisual', 0));
   const [auditionIdolAppealRankList, setAuditionIdolAppealRankList] = useState<AuditionAppealRank[]>(
     loadData<AuditionAppealRank[]>('auditionIdolAppealRankList', [
       'good', 'perfect', 'good', 'normal', 'normal'
     ])
   );
-  const [auditionTurn, setAuditionTurn] = useState(
-    loadData('auditionTurn', 3)
-  );
-  const [handIdolList, setHandIdolList] = useState(
-    loadData('handIdolList', ['霧子', '真乃', '甘奈'])
-  );
-  const [handPowerList, setHandPowerList] = useState(
-    loadData('handPowerList', ['3.0', '2.0', '2.5'])
-  );
-  const [appealTarget, setAppealTarget] = useState<AuditionAppealType>(
-    loadData<AuditionAppealType>('appealTarget', 'visual')
-  );
-  const [appealResult, setAppealResult] = useState<AuditionAppealRank>(
-    loadData<AuditionAppealRank>('appealResult', 'perfect')
-  );
-  const [judgeVocal, setJudgeVocal] = useState(
-    loadData('judgeVocal', 0)
-  );
-  const [judgeDance, setJudgeDance] = useState(
-    loadData('judgeDance', 0)
-  );
-  const [judgeVisual, setJudgeVisual] = useState(
-    loadData('judgeVisual', 0)
-  );
-  const [auditionTrend, setAuditionTrend] = useState(
-    loadData('auditionTrend', 'vodavi')
-  );
+  const [auditionTurn, setAuditionTurn] = useState(loadData('auditionTurn', 3));
+  const [handIdolList, setHandIdolList] = useState(loadData('handIdolList', ['霧子', '真乃', '甘奈']));
+  const [handPowerList, setHandPowerList] = useState(loadData('handPowerList', ['3.0', '2.0', '2.5']));
+  const [appealTarget, setAppealTarget] = useState<AuditionAppealType>(loadData<AuditionAppealType>('appealTarget', 'visual'));
+  const [appealResult, setAppealResult] = useState<AuditionAppealRank>(loadData<AuditionAppealRank>('appealResult', 'perfect'));
+  const [judgeVocal, setJudgeVocal] = useState(loadData('judgeVocal', 0));
+  const [judgeDance, setJudgeDance] = useState(loadData('judgeDance', 0));
+  const [judgeVisual, setJudgeVisual] = useState(loadData('judgeVisual', 0));
+  const [auditionTrend, setAuditionTrend] = useState(loadData('auditionTrend', 'vodavi'));
 
   // データの自動保存
-  useEffect(() => {
-    saveData('produceIdol', produceIdol);
-  }, [produceIdol]);
-  useEffect(() => {
-    saveData('memorialLevel', memorialLevel);
-  }, [memorialLevel]);
-  useEffect(() => {
-    saveData('memorialVocal', memorialVocal);
-  }, [memorialVocal]);
-  useEffect(() => {
-    saveData('memorialDance', memorialDance);
-  }, [memorialDance]);
-  useEffect(() => {
-    saveData('memorialVisual', memorialVisual);
-  }, [memorialVisual]);
-  useEffect(() => {
-    saveData('auditionWeek', auditionWeek);
-  }, [auditionWeek]);
-  useEffect(() => {
-    saveData('buffVocal', buffVocal);
-  }, [buffVocal]);
-  useEffect(() => {
-    saveData('buffDance', buffDance);
-  }, [buffDance]);
-  useEffect(() => {
-    saveData('buffVisual', buffVisual);
-  }, [buffVisual]);
-  useEffect(() => {
-    saveData('auditionIdolAppealRankList', auditionIdolAppealRankList);
-  }, [auditionIdolAppealRankList]);
-  useEffect(() => {
-    saveData('auditionTurn', auditionTurn);
-  }, [auditionTurn]);
-  useEffect(() => {
-    saveData('handIdolList', handIdolList);
-  }, [handIdolList]);
-  useEffect(() => {
-    saveData('handPowerList', handPowerList);
-  }, [handPowerList]);
-  useEffect(() => {
-    saveData('appealTarget', appealTarget);
-  }, [appealTarget]);
-  useEffect(() => {
-    saveData('appealResult', appealResult);
-  }, [appealResult]);
-  useEffect(() => {
-    saveData('judgeVocal', judgeVocal);
-  }, [judgeVocal]);
-  useEffect(() => {
-    saveData('judgeDance', judgeDance);
-  }, [judgeDance]);
-  useEffect(() => {
-    saveData('judgeVisual', judgeVisual);
-  }, [judgeVisual]);
-  useEffect(() => {
-    saveData('auditionTrend', auditionTrend);
-  }, [auditionTrend]);
+  useEffect(() => saveData('produceIdol', produceIdol), [produceIdol]);
+  useEffect(() => saveData('memorialLevel', memorialLevel), [memorialLevel]);
+  useEffect(() => saveData('memorialVocal', memorialVocal), [memorialVocal]);
+  useEffect(() => saveData('memorialDance', memorialDance), [memorialDance]);
+  useEffect(() => saveData('memorialVisual', memorialVisual), [memorialVisual]);
+  useEffect(() => saveData('auditionWeek', auditionWeek), [auditionWeek]);
+  useEffect(() => saveData('buffVocal', buffVocal), [buffVocal]);
+  useEffect(() => saveData('buffDance', buffDance), [buffDance]);
+  useEffect(() => saveData('buffVisual', buffVisual), [buffVisual]);
+  useEffect(() => saveData('auditionIdolAppealRankList', auditionIdolAppealRankList), [auditionIdolAppealRankList]);
+  useEffect(() => saveData('auditionTurn', auditionTurn), [auditionTurn]);
+  useEffect(() => saveData('handIdolList', handIdolList), [handIdolList]);
+  useEffect(() => saveData('handPowerList', handPowerList), [handPowerList]);
+  useEffect(() => saveData('appealTarget', appealTarget), [appealTarget]);
+  useEffect(() => saveData('appealResult', appealResult), [appealResult]);
+  useEffect(() => saveData('judgeVocal', judgeVocal), [judgeVocal]);
+  useEffect(() => saveData('judgeDance', judgeDance), [judgeDance]);
+  useEffect(() => saveData('judgeVisual', judgeVisual), [judgeVisual]);
+  useEffect(() => saveData('auditionTrend', auditionTrend), [auditionTrend]);
 
   // dispatch関数
   const dispatch = (action: Action) => {
