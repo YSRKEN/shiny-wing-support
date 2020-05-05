@@ -178,13 +178,13 @@ const TurnAndHandInput: React.FC = () => {
   const { auditionTurn, handIdolList, handPowerList, dispatch } = useContext(WingSimulationContext);
 
   const onChangeTurn = (e: FormEvent<any>) => {
-    dispatch({type: 'setAuditionTurn', message: e.currentTarget.value});
+    dispatch({ type: 'setAuditionTurn', message: e.currentTarget.value });
   };
   const setHandIdol = (index: number, hand: string) => {
-    dispatch({type: 'setHandIdol', message: `${index},${hand}`});
+    dispatch({ type: 'setHandIdol', message: `${index},${hand}` });
   };
   const setHandPower = (index: number, power: string) => {
-    dispatch({type: 'setHandPower', message: `${index},${power}`});
+    dispatch({ type: 'setHandPower', message: `${index},${power}` });
   };
 
   return (
@@ -223,6 +223,38 @@ const TurnAndHandInput: React.FC = () => {
   );
 };
 
+// シミュレーション結果
+const SimulationResultView: React.FC = () => {
+  const { appealTarget, appealResult, dispatch } = useContext(WingSimulationContext);
+
+  const onChangeTarget = (e: FormEvent<any>) => {
+    dispatch({ type: 'setAppealTarget', message: e.currentTarget.value });
+  };
+
+  const setResult = (v: string) => {
+    dispatch({ type: 'setAppealResult', message: v });
+  };
+
+  return (
+    <Form.Group className="my-0">
+      <Form.Label>
+        シミュレーション結果
+  </Form.Label>
+      <div className="d-flex mb-3">
+        <Form.Control size="sm" className="mr-3" value={appealTarget} as="select" onChange={onChangeTarget}>
+          <option value="vocal">Vocal</option>
+          <option value="dance">Dance</option>
+          <option value="visual">Visual</option>
+          <option value="memorial">思い出アピール</option>
+        </Form.Control>
+        <AppealTypeInput value={appealResult} memorialFlg={appealTarget == 'memorial'} setValue={setResult} />
+      </div>
+      <Form.Control as="textarea" rows={10} readOnly disabled
+        defaultValue="ここに計算結果が出る" />
+    </Form.Group>
+  );
+};
+
 // シミュレーション設定
 const WingSimulationView: React.FC = () => {
   return (
@@ -240,22 +272,7 @@ const WingSimulationView: React.FC = () => {
         <TurnAndHandInput />
       </Form.Group>
       <hr style={{ borderWidth: 2, borderColor: 'black' }} />
-      <Form.Group className="my-0">
-        <Form.Label>
-          シミュレーション結果
-      </Form.Label>
-        <div className="d-flex mb-3">
-          <Form.Control size="sm" className="mr-3" defaultValue="Vo" as="select">
-            <option value="Vo">Vocal</option>
-            <option value="Da">Dance</option>
-            <option value="Vi">Visual</option>
-            <option value="Me">思い出アピール</option>
-          </Form.Control>
-          <AppealTypeInput value="good" memorialFlg={false} />
-        </div>
-        <Form.Control as="textarea" rows={10} readOnly disabled
-          defaultValue="ここに計算結果が出る" />
-      </Form.Group>
+      <SimulationResultView />
     </Form>
   );
 };
