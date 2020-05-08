@@ -150,6 +150,84 @@ export const useWingSimulationState = () => {
   useEffect(() => saveData('judgeVisual', judgeVisual), [judgeVisual]);
   useEffect(() => saveData('auditionTrend', auditionTrend), [auditionTrend]);
 
+  // 数値計算(アピール順番を特定する)
+  useEffect(() => {
+    const idolList: {name: string, result: string}[] = [];
+    // プロデュースアイドルの情報を入力する
+    // nameキーがアイドル名、resultがアピールの種類を表す
+    if (appealTarget === 'memorial') {
+      // プロデュースアイドルが思い出アピールを打った場合
+      idolList.push({name: 'user', result: 'memorial'});
+    } else {
+      // プロデュースアイドルがその他のアピールを打った場合
+      idolList.push({name: 'user', result: appealResult});
+    }
+
+    // 他のアイドルの情報を入力する
+    for (let i = 0; i < RIVAL_DATA[auditionWeek].length; i += 1) {
+      idolList.push(
+        {name: RIVAL_DATA[auditionWeek][i].name, result: auditionIdolAppealRankList[i]}
+      );
+    }
+
+    // 情報同士を比較する関数。交換するべきとみなした場合はtrueが返る
+    const nameList = RIVAL_DATA[auditionWeek].map(r => r.name);
+    const isSwap = (a: {name: string, result: string}, b: {name: string, result: string}): boolean => {
+      // プロデュースアイドルの思い出アピールは最優先とする
+      if (b.name === 'user' && b.result === 'memorial') {
+        return true;
+      }
+      if (a.name === 'user' && a.result === 'memorial') {
+        return false;
+      }
+
+      // 判定が同じ場合、bがプロデュースアイドルだった場合のみ交換する
+      // ・idolListの中にプロデュースアイドルは1つしか存在しない
+      // ・bがプロデュースアイドルの場合、aは各日にプロデュースアイドルではないので交換できる
+      // ・aがプロデュースアイドルの場合、交換しない
+      // ・aもbもプロデュースアイドルではない場合、アイドルの名称を見て処理する
+      if (a.result === b.result) {
+        if (b.name === 'user') {
+          return true;
+        }
+        if (a.name === 'user') {
+          return false;
+        }
+        const indexA = nameList.indexOf(a.name);
+        const indexB = nameList.indexOf(b.name);
+        if (indexA > indexB) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+
+      // 判定が異なるため、より優先度が高い判定を先に持ってくる
+      const dict: {[key: string]: number} = {
+        'perfect': 0,
+        'memorial': 1,
+        'good': 2,
+        'normal': 3,
+        'bad': 4
+      };
+      return dict[a.result] > dict[b.result];
+    }
+
+    // ソート処理
+    for (let i = 0; i < idolList.length - 1; i += 1) {
+      for (let j = i + 1; j < idolList.length; j += 1) {
+        if (isSwap(idolList[i], idolList[j])) {
+          const temp = {name: idolList[i].name, result: idolList[i].result};
+          idolList[i] = {name: idolList[j].name, result: idolList[j].result};
+          idolList[j] = temp;
+        }
+      }
+    }
+
+    // 結果を表示
+    console.log(JSON.stringify(idolList,null,4));
+  }, [auditionWeek, auditionIdolAppealRankList, appealTarget, appealResult]);
+
   // dispatch関数
   const dispatch = (action: Action) => {
     console.debug(action);
